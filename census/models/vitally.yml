@@ -5,5 +5,5 @@ model:vitally:
     SELECT '199' as account_id, 'One Ninety Nine' as name, '0055A000006KXtuQAG' as ownerid, 'Warm' as rating
     UNION ALL
     SELECT 'CD656092' as account_id, 'Burlington Textiles Corp of America' as name, '0055A000006KXtuQAX' as ownerid, 'Cold' as rating
-  description: 
+  description: Synced by git
   connection: data_warehouse:snowflake
