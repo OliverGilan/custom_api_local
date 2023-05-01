@@ -1,0 +1,51 @@
+---
+sync:snowflake-vitally-vitally-account:
+  paused: false
+  behavior:
+    operation: update
+  mapping_configuration:
+    sync_all_source_columns:
+      enabled: false
+      mode: add_only
+  triggers:
+    schedule:
+      frequency: never
+  enable_sync_logs: false
+  service_slice_size: 100000
+  destination:
+    connection_identifier: destination:vitally
+    object_identifier: account
+  source:
+    type: model
+    connection_identifier: data_warehouse:snowflake
+    object_identifier: model:vitally
+  mappings:
+  - from:
+      type: column
+      data:
+        column_name: ACCOUNT_ID
+    to:
+      field_name: accountId
+    array_field: false
+    is_primary_identifier: true
+    upsert_mapping: true
+    truncate: false
+    preserve_values: false
+  - from:
+      type: column
+      data:
+        column_name: NAME
+    to:
+      field_name: name
+    array_field: false
+    is_primary_identifier: false
+    upsert_mapping: false
+    truncate: false
+    preserve_values: false
+  operational_settings:
+    alerts:
+      failed_run_notifications:
+        enabled: true
+      failed_record_notifications:
+        enabled: true
+        threshold_percent: 75

@@ -1,0 +1,82 @@
+---
+sync:sqlserver-vitally-accounts-test-service-object:
+  paused: false
+  behavior:
+    operation: upsert
+  mapping_configuration:
+    sync_all_source_columns:
+      enabled: true
+      mode: add_only
+    name_normalization: match_source_names
+  triggers:
+    schedule:
+      frequency: never
+  enable_sync_logs: false
+  service_slice_size: 100000
+  destination:
+    connection_identifier: destination:test-service
+    object_identifier: object
+  source:
+    type: table
+    connection_identifier: data_warehouse:sqlserver
+    table_catalog: test-1
+    table_schema: dbo
+    table_name: vitally_accounts
+  mappings:
+  - from:
+      type: column
+      data:
+        column_name: account_id
+    to:
+      field_name: id
+    array_field: false
+    is_primary_identifier: true
+    upsert_mapping: true
+    truncate: false
+    preserve_values: false
+  - from:
+      type: column
+      data:
+        column_name: name
+    to:
+      field_name: name
+    array_field: false
+    is_primary_identifier: false
+    upsert_mapping: false
+    truncate: false
+    preserve_values: false
+  - from:
+      type: column
+      data:
+        column_name: ownerid
+    to:
+      field_name: ownerid
+    field_type: String
+    follow_source_type: false
+    array_field: false
+    is_primary_identifier: false
+    upsert_mapping: false
+    truncate: false
+    generate_field: true
+    preserve_values: false
+  - from:
+      type: column
+      data:
+        column_name: rating
+    to:
+      field_name: rating
+    field_type: String
+    follow_source_type: false
+    array_field: false
+    is_primary_identifier: false
+    upsert_mapping: false
+    truncate: false
+    generate_field: true
+    preserve_values: false
+  operational_settings:
+    alerts:
+      failed_run_notifications:
+        enabled: true
+      failed_record_notifications:
+        enabled: true
+        threshold_percent: 75
